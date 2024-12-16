@@ -17,6 +17,8 @@ public class FakestoreProductDto {
     private String category;
     private String image;
 
+    //get the product of our Implementation //values from fakestore
+
     public Product getProduct(){
         Product product = new Product();
         product.setId(id);

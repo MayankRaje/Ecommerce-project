@@ -23,8 +23,8 @@ public class ProductController {
     //get product
     @GetMapping("/products/{id}")
     public Product getProductById(@PathVariable("id") Long id) {
-        productService.getSingleProduct(id);
-        return null;
+        Product product=productService.getSingleProduct(id);
+        return product;
     }
     //update product
     public void updateProduct(Product product) {
