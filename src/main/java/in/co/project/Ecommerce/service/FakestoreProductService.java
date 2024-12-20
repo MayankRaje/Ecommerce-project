@@ -1,8 +1,10 @@
 package in.co.project.Ecommerce.service;
 
 import in.co.project.Ecommerce.dto.FakestoreProductDto;
+import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -31,7 +33,23 @@ public class FakestoreProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    public Product createProduct(Long id, String title, String description, Double price, String category, String image) {
+        FakestoreProductDto fakestoreProductDto=new FakestoreProductDto();
+        fakestoreProductDto.setId(id);
+        fakestoreProductDto.setTitle(title);
+        fakestoreProductDto.setPrice(price);
+        fakestoreProductDto.setDescription(description);
+        fakestoreProductDto.setCategory(category);
+        fakestoreProductDto.setImage(image);
+
+        FakestoreProductDto response=restTemplate.postForObject("https://fakestoreapi.com/products",
+                                                                fakestoreProductDto,FakestoreProductDto.class);
+        return response.getProduct();
     }
+
+//    @Override
+//    public Product createProduct(@RequestBody Product product) {
+//        return null;
+//    }
+
 }
