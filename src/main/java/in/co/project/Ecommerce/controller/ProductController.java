@@ -1,5 +1,6 @@
 package in.co.project.Ecommerce.controller;
 
+import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Product;
 import org.springframework.web.bind.annotation.*;
 import in.co.project.Ecommerce.service.FakestoreProductService;
@@ -16,8 +17,10 @@ public class ProductController {
 
     //create a product
     @RequestMapping(value = "/products",method = RequestMethod.POST)
-    public void createProduct(Product product) {
-
+    public Product createProduct(@RequestBody Product product) {
+        Product p=productService.createProduct(product.getId(),product.getTitle(),product.getDescription(),
+                product.getPrice(),product.getCategory().getTitle(),product.getImageUrl());
+               return p;
     }
 
     //get product
@@ -27,7 +30,7 @@ public class ProductController {
         return product;
     }
     //update product
-    public void updateProduct(Product product) {
+    public void updateProduct( Product product) {
 
     }
     //delete product
