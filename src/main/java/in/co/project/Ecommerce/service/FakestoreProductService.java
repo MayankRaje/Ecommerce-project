@@ -64,6 +64,7 @@ public class FakestoreProductService implements ProductService{
     }
 
 //    @Override
+
 //    public Product updateProduct(Long id, String title, Double price, String description, String image, String category) {
 //        FakestoreProductDto fakestoreProductDto=new FakestoreProductDto();
 //        fakestoreProductDto.setId(id);
@@ -82,6 +83,7 @@ public class FakestoreProductService implements ProductService{
 //    }
 
 //    @Override
+
 //    public Product createProduct(@RequestBody Product product) {
 //        return null;
 //    }
@@ -92,5 +94,6 @@ public class FakestoreProductService implements ProductService{
         restTemplate.delete("https://fakestoreapi.com/products/"+ id,id);
 
       }
+
 
 }
