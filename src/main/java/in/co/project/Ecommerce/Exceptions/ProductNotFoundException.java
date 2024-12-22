@@ -1,0 +1,7 @@
+package in.co.project.Ecommerce.Exceptions;
+
+public class ProductNotFoundException extends Exception{
+    public ProductNotFoundException(String message){
+        super(message);
+    }
+}
