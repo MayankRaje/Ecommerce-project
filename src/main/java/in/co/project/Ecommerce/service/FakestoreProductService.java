@@ -3,7 +3,7 @@ package in.co.project.Ecommerce.service;
 import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
