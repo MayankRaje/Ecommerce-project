@@ -1,5 +1,6 @@
 package in.co.project.Ecommerce.service;
 
+import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
