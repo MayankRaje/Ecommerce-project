@@ -23,7 +23,7 @@ public class FakestoreProductService implements ProductService{
     @Override
     public Product getSingleProduct(Long id) {
         FakestoreProductDto fakestoreProductDto=
-                restTemplate.getForObject("https://fakestoreapi.com/products/1"+id, FakestoreProductDto.class);
+                restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakestoreProductDto.class);
         //System.out.println("returning single product method");
         // convert FakestoreProductDtO to my Product
 
@@ -63,37 +63,73 @@ public class FakestoreProductService implements ProductService{
         return response.getProduct();
     }
 
-//    @Override
+    @Override
+    public Product updateProduct(Long id, String title, Double price, String description, String image, String category) {
+        Product product=getSingleProduct(id);
+        FakestoreProductDto fakestoreProductDto=new FakestoreProductDto();
+        fakestoreProductDto.setId(product.getId());
+        fakestoreProductDto.setTitle(product.getTitle());
+        fakestoreProductDto.setPrice(product.getPrice());
+        fakestoreProductDto.setDescription(product.getDescription());
+        fakestoreProductDto.setCategory(product.getCategory().getTitle());
+        fakestoreProductDto.setImage(image);
 
-//    public Product updateProduct(Long id, String title, Double price, String description, String image, String category) {
+        restTemplate.put("https://fakestoreapi.com/products/"+id,fakestoreProductDto
+                ,FakestoreProductDto.class);
+//        HttpHeaders headers=new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        HttpEntity<Product>entity=new HttpEntity<>(product,headers);
+//        restTemplate.exchange("https://fakestoreapi.com/products/"+id, HttpMethod.PUT,entity
+//                ,Product.class);
+//
+//
+        return fakestoreProductDto.getProduct();
+    }
+
+//    @Override
+//    public Product updateProduct(Long id,Product product) {
+//        Product product=getSingleProduct(id);
 //        FakestoreProductDto fakestoreProductDto=new FakestoreProductDto();
-//        fakestoreProductDto.setId(id);
-//        fakestoreProductDto.setTitle(title);
-//        fakestoreProductDto.setPrice(price);
-//        fakestoreProductDto.setDescription(description);
-//        fakestoreProductDto.setCategory(category);
+//        fakestoreProductDto.setId(product.getId());
+//        fakestoreProductDto.setTitle(product.getTitle());
+//        fakestoreProductDto.setPrice(product.getPrice());
+//        fakestoreProductDto.setDescription(product.getDescription());
+//        fakestoreProductDto.setCategory(product.getCategory().getTitle());
 //        fakestoreProductDto.setImage(image);
 //
-//        FakestoreProductDto response=restTemplate.exc("https://fakestoreapi.com/products",
-//                fakestoreProductDto,FakestoreProductDto.class);
-//        return response.getProduct();
-//
-//
-//        return null;
+//        return fakestoreProductDto.getProduct();
 //    }
 
 //    @Override
-
 //    public Product createProduct(@RequestBody Product product) {
 //        return null;
 //    }
 
-      public void deleteSingleProduct(Long id) {
+//      @Override
+//      public void deleteSingleProduct(Long id) { //1 VOID RETURN TYPE
+//        //M==>1 ==> Itetate ans skip an id
+//        //M==>2
+//        restTemplate.delete("https://fakestoreapi.com/products/"+ id,id);
+//
+//      }
+
+    @Override
+    public Product deleteSingleProduct(Long id) { //RETURN PRODUCT IN POSTMAN
         //M==>1 ==> Itetate ans skip an id
         //M==>2
+        Product product = getSingleProduct(id);
         restTemplate.delete("https://fakestoreapi.com/products/"+ id,id);
+        return product;
+    }
 
-      }
-
+    //@Override
+//    public Product deleteSingleProduct(Product product1) { //implement via response body from POSTMAN
+//        //M==>1 ==> Itetate ans skip an id
+//        //M==>2
+//        Long id=product1.getId();
+//        Product product=getSingleProduct(product1.getId());
+//        restTemplate.delete("https://fakestoreapi.com/products/"+ id,id);
+//        return product;
+//    }
 
 }

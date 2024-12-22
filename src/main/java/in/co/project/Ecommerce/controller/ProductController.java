@@ -41,14 +41,33 @@ public class ProductController {
         return product;
     }
     //update product
-    public void updateProduct( Product product) {
-
+    @PutMapping("/products/{id}")
+    public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product) {
+        return productService.updateProduct(id,product.getTitle(),product.getPrice(),
+                                product.getDescription(),product.getImageUrl(),
+                                product.getCategory().getTitle());// we can directly pass Product object here instead of properties
     }
     //delete product
+//    @DeleteMapping("/products/{id}")
+//    public void deleteSingleProduct(@PathVariable("id") Long id) { //HW(del EP with void RT)
+//         productService.deleteSingleProduct(id);
+//
+//    }
+
+    //2//delete product with Product return type
     @DeleteMapping("/products/{id}")
-    public void deleteSingleProduct(@PathVariable("id") Long id) { //HW(del EP with void RT)
-         productService.deleteSingleProduct(id);
+    public Product deleteSingleProduct(@PathVariable("id") Long id) { //HW(del EP with product RT)
+        Product product=productService.deleteSingleProduct(id);
+        return product;
 
     }
+
+    //3//delete product with request body
+//    @DeleteMapping("/products")
+//    public Product deleteSingleProduct(@RequestBody Product product1) { //HW(del EP with product RT)
+//        Product product=productService.deleteSingleProduct(product1);
+//        return product;
+//
+//    }
 
 }
