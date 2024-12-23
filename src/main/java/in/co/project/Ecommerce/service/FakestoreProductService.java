@@ -1,5 +1,6 @@
 package in.co.project.Ecommerce.service;
 
+import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
@@ -21,10 +22,14 @@ public class FakestoreProductService implements ProductService{
     }
 
     @Override
-    public Product getSingleProduct(Long id) {
+    public Product getSingleProduct(Long id)throws ProductNotFoundException {
         FakestoreProductDto fakestoreProductDto=
                 restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakestoreProductDto.class);
         //System.out.println("returning single product method");
+        if(fakestoreProductDto==null){
+            throw new ProductNotFoundException("product not found with id : "+id);
+        }
+
         // convert FakestoreProductDtO to my Product
 
         return fakestoreProductDto.getProduct();
@@ -64,7 +69,7 @@ public class FakestoreProductService implements ProductService{
     }
 
     @Override
-    public Product updateProduct(Long id, String title, Double price, String description, String image, String category) {
+    public Product updateProduct(Long id, String title, Double price, String description, String image, String category) throws ProductNotFoundException {
         Product product=getSingleProduct(id);
         FakestoreProductDto fakestoreProductDto=new FakestoreProductDto();
         fakestoreProductDto.setId(product.getId());
@@ -114,7 +119,7 @@ public class FakestoreProductService implements ProductService{
 //      }
 
     @Override
-    public Product deleteSingleProduct(Long id) { //RETURN PRODUCT IN POSTMAN
+    public Product deleteSingleProduct(Long id) throws ProductNotFoundException { //RETURN PRODUCT IN POSTMAN
         //M==>1 ==> Itetate ans skip an id
         //M==>2
         Product product = getSingleProduct(id);

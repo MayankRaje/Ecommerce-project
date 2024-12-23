@@ -1,16 +1,24 @@
 package in.co.project.Ecommerce.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Product {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Product extends BaseModel {
     private Long id;
     private String title;
     private String description;
     private Double price;
     private String imageUrl;
+    @ManyToOne
     private Category category;
 
 //    public Long getId() {
@@ -60,4 +68,16 @@ public class Product {
 //    public void setCategory(Category category) {
 //        this.category = category;
 //    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", category=" + category +
+                '}';
+    }
 }

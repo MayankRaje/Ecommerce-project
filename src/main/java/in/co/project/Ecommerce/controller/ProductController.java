@@ -1,13 +1,14 @@
 package in.co.project.Ecommerce.controller;
 
-import in.co.project.Ecommerce.dto.FakestoreProductDto;
+import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
+import in.co.project.Ecommerce.dto.ErrorDto;
 import in.co.project.Ecommerce.models.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import in.co.project.Ecommerce.service.FakestoreProductService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class ProductController {
@@ -15,7 +16,7 @@ public class ProductController {
 
     private FakestoreProductService productService; //link b/w controller---> service
 
-    public ProductController(FakestoreProductService productService) { //Dependency Injection
+    public ProductController(FakestoreProductService productService) { //Dependency Injection(Constructor)
         this.productService = productService;
     }
 
@@ -29,7 +30,7 @@ public class ProductController {
 
     //get product
     @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable("id") Long id) {
+    public Product getProductById(@PathVariable("id") Long id)throws ProductNotFoundException {
         Product product=productService.getSingleProduct(id);
         return product;
     }
@@ -42,7 +43,7 @@ public class ProductController {
     }
     //update product
     @PutMapping("/products/{id}")
-    public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product) {
+    public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product) throws ProductNotFoundException {
         return productService.updateProduct(id,product.getTitle(),product.getPrice(),
                                 product.getDescription(),product.getImageUrl(),
                                 product.getCategory().getTitle());// we can directly pass Product object here instead of properties
@@ -56,7 +57,7 @@ public class ProductController {
 
     //2//delete product with Product return type
     @DeleteMapping("/products/{id}")
-    public Product deleteSingleProduct(@PathVariable("id") Long id) { //HW(del EP with product RT)
+    public Product deleteSingleProduct(@PathVariable("id") Long id)throws ProductNotFoundException { //HW(del EP with product RT)
         Product product=productService.deleteSingleProduct(id);
         return product;
 
@@ -69,5 +70,17 @@ public class ProductController {
 //        return product;
 //
 //    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleProductNotFoundException(Exception e) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage(e.getMessage());
+
+
+        ResponseEntity<ErrorDto> response = new ResponseEntity<>(
+                errorDto, HttpStatus.NOT_FOUND
+        );
+        return response;
+    }
 
 }
