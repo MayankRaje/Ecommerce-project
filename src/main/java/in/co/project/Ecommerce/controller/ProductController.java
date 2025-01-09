@@ -3,6 +3,7 @@ package in.co.project.Ecommerce.controller;
 import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.ErrorDto;
 import in.co.project.Ecommerce.models.Product;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,11 @@ public class ProductController {
 
     private FakestoreProductService productService; //link b/w controller---> service
 
-    public ProductController(FakestoreProductService productService) { //Dependency Injection(Constructor)
-        this.productService = productService;
-    }
+//    public ProductController(FakestoreProductService productService) { //Dependency Injection(Constructor)
+//        this.productService = productService;
+//    }
+
+
 
     //create a product
     @RequestMapping(value = "/products",method = RequestMethod.POST)

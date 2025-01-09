@@ -80,4 +80,6 @@ public class Product extends BaseModel {
                 ", category=" + category +
                 '}';
     }
+
+
 }

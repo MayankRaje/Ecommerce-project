@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakestoreProductService implements ProductService{
     RestTemplate restTemplate;
 
