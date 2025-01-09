@@ -4,7 +4,9 @@ import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.ErrorDto;
 import in.co.project.Ecommerce.models.Product;
 import in.co.project.Ecommerce.service.FakestoreProductService;
+import in.co.project.Ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
@@ -20,10 +22,15 @@ import java.util.List;
 public class ProductController_ResponseEntity {
 
     private FakestoreProductService productService;
+    
+    //private ProductService productService;
     @Autowired
     public void setProductService(FakestoreProductService productService) {//setter DI
         this.productService = productService;
     }
+//    public void setProductService(@Qualifier("selfProductService") ProductService productService) {//setter DI
+//        this.productService = productService;
+//    }
 
     //create
     @RequestMapping(value = "/products",method = RequestMethod.POST)
