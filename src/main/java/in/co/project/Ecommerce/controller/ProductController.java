@@ -2,8 +2,10 @@ package in.co.project.Ecommerce.controller;
 
 import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.ErrorDto;
+import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,6 +75,8 @@ public class ProductController {
 //        return product;
 //
 //    }
+
+
 
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorDto> handleProductNotFoundException(Exception e) {

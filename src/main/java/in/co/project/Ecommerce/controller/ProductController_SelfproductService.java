@@ -3,8 +3,8 @@ package in.co.project.Ecommerce.controller;
 import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.models.Product;
 import in.co.project.Ecommerce.service.ProductService;
-import org.hibernate.query.Page;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,7 +75,11 @@ public class ProductController_SelfproductService {
 //    public Page<Product> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize")int pageSize, @RequestParam("fieldName")String fieldName, @RequestParam("searchQuery") String searchQuery) {
 //        return productService.getAllProducts(pageNumber,pageSize, fieldName);
 //    }
-
+    @GetMapping("/products/Page")
+    public Page<Product> getProductsByPage(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize")int pageSize,
+                                           @RequestParam("fieldName")String fieldName, @RequestParam("searchQuery") String searchQuery){
+        return productService.getAllProductsbyPageNumber(pageNumber,pageSize,fieldName);
+    }
 
 
 

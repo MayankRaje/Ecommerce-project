@@ -4,6 +4,7 @@ import in.co.project.Ecommerce.Exceptions.ProductNotFoundException;
 import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +52,11 @@ public class FakestoreProductService implements ProductService{
 //            product.add(fakeStoreProductDto[c++].getProduct());
 //        }
         return product;
+    }
+
+    @Override
+    public Page<Product> getAllProductsbyPageNumber(int pageNumber, int pageSize, String fieldName) {
+        return null;
     }
 
     @Override
