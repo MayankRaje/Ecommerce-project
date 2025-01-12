@@ -22,4 +22,9 @@ public class PaymentsController {
         String paymentLink=paymentServices.makePayments(paymentsRequestDto.getOrderId(),paymentsRequestDto.getAmount());
         return new ResponseEntity<>(paymentLink, HttpStatus.OK);
     }
+    @PostMapping("/webhook")
+    public void handleWebhook() {
+        System.out.println("Webhook revecied here");
+        return;
+    }
 }

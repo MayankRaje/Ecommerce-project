@@ -37,6 +37,17 @@ public class StripePaymentGatewayImpl implements PaymentServices{
                                         .setQuantity(1L)
                                         .build()
                         )
+                        .setAfterCompletion( // implementing callables
+                                PaymentLinkCreateParams.AfterCompletion.builder()
+                                        .setType(PaymentLinkCreateParams.AfterCompletion.Type.REDIRECT)
+                                        .setRedirect(
+                                                PaymentLinkCreateParams.AfterCompletion.Redirect.builder()
+                                                        .setUrl("https://example.com")
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+
                         .build();
 
         PaymentLink paymentLink = PaymentLink.create(linkparams);
