@@ -19,9 +19,9 @@ public class ProductController {
 
     private FakestoreProductService productService; //link b/w controller---> service
 
-//    public ProductController(FakestoreProductService productService) { //Dependency Injection(Constructor)
-//        this.productService = productService;
-//    }
+    public ProductController(FakestoreProductService productService) { //Dependency Injection(Constructor)
+        this.productService = productService;
+    }
 
 
 

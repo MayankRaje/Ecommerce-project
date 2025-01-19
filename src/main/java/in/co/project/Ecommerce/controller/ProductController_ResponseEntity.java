@@ -5,7 +5,6 @@ import in.co.project.Ecommerce.dto.ErrorDto;
 import in.co.project.Ecommerce.models.Product;
 import in.co.project.Ecommerce.service.FakestoreProductService;
 import in.co.project.Ecommerce.service.ProductService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;

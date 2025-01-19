@@ -8,6 +8,7 @@ import in.co.project.Ecommerce.repository.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,18 +20,33 @@ public class SelfProductService implements ProductService{
 
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
+    //private RedisTemplate redisTemplate;
 
-    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {//DI
+    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+
     }
+    //    public SelfProductService(ProductRepository productRepository, CategoryRepository categoryRepository) {//DI
+//        this.productRepository = productRepository;
+//        this.categoryRepository = categoryRepository;
+//    }
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotFoundException {
+        //Product redisProduct = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCTS_"+id);
+
+//        if(redisProduct != null) {
+//            // cache hit
+//            System.out.println("Inside redis");
+//            return redisProduct;
+//        }
 
         //return optional product// graceful way
         Optional<Product> p=productRepository.findById(id);
         if(p.isPresent()){
+            //redisTemplate.opsForHash().put("PRODUCTS", "PRODUCTS_"+id, p);
+
             return p.get();
         }
         throw new ProductNotFoundException("Product not found in DB");
