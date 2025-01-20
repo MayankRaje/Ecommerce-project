@@ -5,6 +5,7 @@ import in.co.project.Ecommerce.dto.FakestoreProductDto;
 import in.co.project.Ecommerce.models.Category;
 import in.co.project.Ecommerce.models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +17,40 @@ import java.util.List;
 
 @Service("fakeStoreProductService")
 public class FakestoreProductService implements ProductService{
-    RestTemplate restTemplate;
+    private RestTemplate restTemplate;
+    private RedisTemplate <String,Object> redisTemplate;
 
-    public FakestoreProductService(RestTemplate restTemplate) {
+    public FakestoreProductService(RestTemplate restTemplate, RedisTemplate redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
+    //    public FakestoreProductService(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+
+
+//    public FakestoreProductService(RestTemplate restTemplate, RedisTemplate redisTemplate) {
+//        this.restTemplate = restTemplate;
+//        this.redisTemplate = redisTemplate;
+//    }
+
 
     @Override
     public Product getSingleProduct(Long id)throws ProductNotFoundException {
+        //Implement Redis
+
+        // First part is : assume it as table name
+        // Second part : key of the product
+
+        Product redisProduct = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCTS_"+id);
+
+        if(redisProduct != null) {
+            // cache hit
+            System.out.println("Inside redis");
+            return redisProduct;
+        }
+
+
         FakestoreProductDto fakestoreProductDto=
                 restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakestoreProductDto.class);
         //System.out.println("returning single product method");
@@ -33,7 +60,12 @@ public class FakestoreProductService implements ProductService{
 
         // convert FakestoreProductDtO to my Product
 
+//        return fakestoreProductDto.getProduct();
+
+        redisTemplate.opsForHash().put("PRODUCTS", "PRODUCTS_"+id, fakestoreProductDto.getProduct());
+
         return fakestoreProductDto.getProduct();
+
     }
 
     @Override
